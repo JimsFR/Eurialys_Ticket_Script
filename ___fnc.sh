@@ -136,17 +136,17 @@ echo "setTicketRestant: CLIENT1: ${_client}"
         done | sort -u > "${_fileEtatTicketsClient}"
 }
 
-function __getTicketRestant() {
+function __formatTicketRestant() {
 
-  for _getTicketRestant in $(cat "${_fileEtatTicketsClientBrut}"); do
+  for _formatTicketRestant in $(cat "${_fileEtatTicketsClientBrut}"); do
 
      #récupère les tickets restant
-     _TicketsRestant=$(echo ${_getTicketRestant} | awk -F# '{print$4}')
+     _TicketsRestant=$(echo ${_formatTicketRestant} | awk -F# '{print$4}')
 
      #récupère le nom du client
-     _nameClient="$(echo ${_getTicketRestant} | awk -F# '{$1=$2=$3=$4=""; print}' | sed -e 's/[- ]/#/g' | sed -e 's/####//g' )"
+     _nameClient="$(echo ${_formatTicketRestant} | awk -F# '{$1=$2=$3=$4=""; print}' | sed -e 's/[- ]/#/g' | sed -e 's/####//g' )"
 
-     echo "${_TicketsRestant}${_nameClient} "
+     echo "${_TicketsRestant}#${_nameClient} "
 
   done | sort -u > "${_fileEtatTicketsRestant}"
 }
