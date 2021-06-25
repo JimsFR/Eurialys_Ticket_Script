@@ -11,6 +11,9 @@ function __configFile() {
   # Fichier utilisé pour construire le fichierAllTicketRestant, il comporte (num Client, conso totale, nb ticket vendu, ticket restant et nom client).
   _fileEtatTicketsClientBrut=fileEtatTicketsBrut.txt
 
+  # Fichier utilisé pour construire le fichierAllTicketRestant, il comporte (tickets restant et nom client).
+  _fileEtatTicketsRestant=fileEtatTicketsRestant.txt
+
   # Fichier permettant de posséder tout les tickets restants de tout les clients.
   _fileEtatTicketsClient=fileEtatTicketsClient.txt
 
@@ -131,6 +134,21 @@ echo "setTicketRestant: CLIENT1: ${_client}"
                 fi
         # le met dans le fichier 'eurialysTickRestant.txt' lors du saut de ligne de file2 (variable : _fileEtatTicketsClient, fonction : __configFile)
         done | sort -u > "${_fileEtatTicketsClient}"
+}
+
+function __getTicketRestant() {
+
+  for _getTicketRestant in $(cat "${_fileEtatTicketsClientBrut}"); do
+
+     #récupère les tickets restant
+     _TicketsRestant=$(echo ${_getTicketRestant} | awk -F# '{print$4}')
+
+     #récupère le nom du client
+     _nameClient="$(echo ${_getTicketRestant} | awk -F# '{$1=$2=$3=$4=""; print}' | sed -e 's/[- ]/#/g' | sed -e 's/####//g' )"
+
+     echo "${_TicketsRestant}${_nameClient} "
+
+  done | sort -u > "${_fileEtatTicketsRestant}"
 }
 
 function __retrieveNumClient () {
