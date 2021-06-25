@@ -7,7 +7,7 @@ source ___fnc.sh
   __configFile
   __retrieveNumClient
 
-  # Permet de parcourir tout©© le tableau qui est remplis des id des clients
+  # Permet de parcourir tout le tableau qui est remplis des id des clients
   for k in $(cat "${_fileNumClient}"); do
       while read -r output; do
         # Dans le echo j'ai mis un $10/60, ça permet de passer le "datetime" qui est secondes en  minutes
