@@ -18,7 +18,7 @@ source ___fnc.sh
 
                 echo "**${_nomClient1}"
 
-                #  __ticketRestant.Debug   # mode debug
+                #  __EtatTicketsClients.Debug   # mode debug
 
                 __setTicketRestant "${_nomClient1}"  # Permet de d'afficher l'affichage de tout les clients des tickets restants
 

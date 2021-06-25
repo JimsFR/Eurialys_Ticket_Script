@@ -29,9 +29,8 @@ function __errorString() {
 
   _nomClientError="${RED}ERROR${NC}, you need to debug ${RED}'__ticketRestant'${NC} && ${RED}'__moveTo'${NC} function."
 }
-function __ticketRestant.Debug() {
+function __EtatTicketsClients.Debug() {
     echo "numLigne:${_numLigne}"    # Pour cette ligne seulement de _fileClientParMois, affiche le numéro de ligne récupéré
-    echo "idClient:${_idClient}"    # Pour cette ligne seulement de _fileClientParMois, affiche l’ID client
     echo "nomClient:${_nomClient1}"    # Pour cette ligne seulement de _fileClientParMois, affiche le nom du client
 }
 
@@ -127,7 +126,7 @@ echo "setTicketRestant: CLIENT1: ${_client}"
                         # Construit la phrase à insérer ensuite
                         echo "DATE:" $(/bin/date '+20%y-%m-%d') "CLIENT:" ${_nomClient2} "TICKETS RESTANTS:" ${_nbTicketsRestant}
                 else
-                        # Cette variable ce situe dans la fonction "__ticketRestant.debug"
+                        # Cette variable ce situe dans la fonction "__EtatTicketsClients.Debug"
                         echo -e ${_nomClientError}
                 fi
         # le met dans le fichier 'eurialysTickRestant.txt' lors du saut de ligne de file2 (variable : _fileEtatTicketsClient, fonction : __configFile)
