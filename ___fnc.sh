@@ -3,9 +3,9 @@
 ## FONCTIONS DE CONFIGURATION ##
 function __configFile() {
   _fileTemp=temp.txt    # Fichier Temporaire.
-  _fileAppelsDuMois=fileAppelDuMois.txt    # Fichier comportant tout les tickets (libellé, nom client, num client, date, statut, nb de consommation par ticket).
-  _fileEtatTicketsClientBrut=fileEtatTicketBrut.txt   # Fichier utilisé pour construire le fichierAllTicketRestant, il comporte (num Client, conso totale, nb ticket vendu, ticket restant et nom client).
-  _fileEtatTicketsClient=fileEtatTicketEurialys.txt   # Fichier permettant de posséder tout les tickets restants de tout les clients.
+  _fileAppelsDuMois=fileAppelsDuMois.txt    # Fichier comportant tout les tickets (libellé, nom client, num client, date, statut, nb de consommation par ticket).
+  _fileEtatTicketsClientBrut=fileEtatTicketsBrut.txt   # Fichier utilisé pour construire le fichierAllTicketRestant, il comporte (num Client, conso totale, nb ticket vendu, ticket restant et nom client).
+  _fileEtatTicketsClient=fileEtatTicketsClient.txt   # Fichier permettant de posséder tout les tickets restants de tout les clients.
   _fileClientParMois=fileClientParMois.txt   # Ce fichier renseigne tout les noms et id de clients qui ont ouvert au moins un ticket ce mois ci.
   _fileNumClient=fileNumCLient.txt # Ce fichier possède tout les num des clients une fois qu'on execute le script.
 }
