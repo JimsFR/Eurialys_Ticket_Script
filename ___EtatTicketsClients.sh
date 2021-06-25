@@ -5,10 +5,10 @@ source ___fnc.sh
         __configFile
         __retrieveTicketRestant
 
-        # Permet de rechercher dans le fichier "_fileAllTicket" les "===" afin de séparer les clients
+        # Permet de rechercher dans le fichier "_fileAppelsDuMois" les "===" afin de séparer les clients
         #   et de pas tout avoir sur la même ligne. Le paramêtre "-nA1" signifie que la ligne de la donnée est écrite.
 
-        grep -nA1 "===" "${_fileAllTicket}"| awk -F"CLIENT: | IDTICKET|NUMCLIENT: | TITRE" 'BEGIN{OFS="NUMCLIENT"}{if(NF>1){gsub("-","#",$2);gsub(" ","#",$2);print(substr($1,0,length($1)-1))"_"$4"_"$2}}' > "${_fileClientParMois}"
+        grep -nA1 "===" "${_fileAppelsDuMois}"| awk -F"CLIENT: | IDTICKET|NUMCLIENT: | TITRE" 'BEGIN{OFS="NUMCLIENT"}{if(NF>1){gsub("-","#",$2);gsub(" ","#",$2);print(substr($1,0,length($1)-1))"_"$4"_"$2}}' > "${_fileClientParMois}"
 
         # Pour chaque ligne de _fileClientParMois
 

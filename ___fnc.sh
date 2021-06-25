@@ -3,10 +3,10 @@
 ## FONCTIONS DE CONFIGURATION ##
 function __configFile() {
   _fileTemp=temp.txt    # Fichier Temporaire.
-  _fileAllTicket=file1.txt    # Fichier comportant tout les tickets (libellé, nom client, num client, date, statut, nb de consommation par ticket).
-  _fileAllTicketRestantBrut=file2.txt   # Fichier utilisé pour construire le fichierAllTicketRestant, il comporte (num Client, conso totale, nb ticket vendu, ticket restant et nom client).
-  _fileAllTicketRestant=eurialysTickRestant.txt   # Fichier permettant de posséder tout les tickets restants de tout les clients.
-  _fileClientParMois=file10.txt   # Ce fichier renseigne tout les noms et id de clients qui ont ouvert au moins un ticket ce mois ci.
+  _fileAppelsDuMois=fileAppelDuMois.txt    # Fichier comportant tout les tickets (libellé, nom client, num client, date, statut, nb de consommation par ticket).
+  _fileEtatTicketsClientBrut=fileEtatTicketBrut.txt   # Fichier utilisé pour construire le fichierAllTicketRestant, il comporte (num Client, conso totale, nb ticket vendu, ticket restant et nom client).
+  _fileEtatTicketsClient=fileEtatTicketEurialys.txt   # Fichier permettant de posséder tout les tickets restants de tout les clients.
+  _fileClientParMois=fileClientParMois.txt   # Ce fichier renseigne tout les noms et id de clients qui ont ouvert au moins un ticket ce mois ci.
   _fileNumClient=fileNumCLient.txt # Ce fichier possède tout les num des clients une fois qu'on execute le script.
 }
 
@@ -43,22 +43,22 @@ function __dateAuto() {
 function __formatList() {
  # Ici on remplace les '#' part des noms tel que Libellé ou bien client en les incorporant dans un fichier temporaire nommé temp.txt
  # ou nous le déplaçeront finalement avec un mv dans le fichier final $_fileAllTicket.txt...
-  awk '{print gensub("#", "CLIENT:", 1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "IDTICKET:", 1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "NUMCLIENT:", 1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "TITRE:", 1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "STATUTS:",1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "CONSO:",1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "OUVERTURE:",1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "FERMETURE:", 1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "CONTACT1:",1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "CONTACT2:",1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "DUREE:",1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
-  awk '{print gensub("#", "MIN",1, $0);}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
+  awk '{print gensub("#", "CLIENT:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "IDTICKET:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "NUMCLIENT:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "TITRE:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "STATUTS:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "CONSO:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "OUVERTURE:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "FERMETURE:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "CONTACT1:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "CONTACT2:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "DUREE:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  awk '{print gensub("#", "MIN",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
   # Permet de séparer les clients...
-  awk -F"NUMCLIENT|TITRE" 'BEGIN{_old=""}{if($2!=_old){_old=$2;print"=================================";print}else{print}}END{print"================================="}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
+  awk -F"NUMCLIENT|TITRE" 'BEGIN{_old=""}{if($2!=_old){_old=$2;print"=================================";print}else{print}}END{print"================================="}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
   # Remplacement des "-"
-  awk 'BEGIN{FS=OFS="NUMCLIENT"}{gsub("-"," ",$1);print}' "${_fileAllTicket}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAllTicket}"
+  awk 'BEGIN{FS=OFS="NUMCLIENT"}{gsub("-"," ",$1);print}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
 }
 
 function __retrieveTicketRestant() {
@@ -86,11 +86,11 @@ function __retrieveTicketRestant() {
                 # la condition 'is_active=1' spécifie que le libellé de la télémaintenance doit être valide
                 AND glpi_plugin_credit_entities.is_active = 1;\"" | sed 1d)
 
-        # Permet de trier par client et renvoie dans le ${_fileAllTicketRestantBrut} sous la forme 'data1#data2#data3#data4'
+        # Permet de trier par client et renvoie dans le ${_fileEtatTicketsClientBrut} sous la forme 'data1#data2#data3#data4'
         # Ici on précise '!/NULL/' pour enlever la ligne ou toutes les données étaient nulles
-        done | sort -u -t# | awk '!/NULL/' > "${_fileAllTicketRestantBrut}"
+        done | sort -u -t# | awk '!/NULL/' > "${_fileEtatTicketsClientBrut}"
 
-        sed -i 's/ /#/g' "${_fileAllTicketRestantBrut}"
+        sed -i 's/ /#/g' "${_fileEtatTicketsClientBrut}"
 }
 
 function __setTicketRestant() {
@@ -100,7 +100,7 @@ function __setTicketRestant() {
 echo "setTicketRestant: CLIENT1: ${_client}"
 
         # Début du script
-        for _ticket in $(cat "${_fileAllTicketRestantBrut}"); do
+        for _ticket in $(cat "${_fileEtatTicketsClientBrut}"); do
 
                 # récupère les tickets restant
                 _nbTicketsRestant=$(echo ${_ticket} | awk -F# '{print$4}')
@@ -119,8 +119,8 @@ echo "setTicketRestant: CLIENT1: ${_client}"
                         # Cette variable ce situe dans la fonction "__ticketRestant.debug"
                         echo -e ${_nomClientError}
                 fi
-        # le met dans le fichier 'eurialysTickRestant.txt' lors du saut de ligne de file2 (variable : _fileAllTicketRestant, fonction : __configFile)
-        done | sort -u > "${_fileAllTicketRestant}"
+        # le met dans le fichier 'eurialysTickRestant.txt' lors du saut de ligne de file2 (variable : _fileEtatTicketsClient, fonction : __configFile)
+        done | sort -u > "${_fileEtatTicketsClient}"
 }
 
 function __retrieveNumClient () {

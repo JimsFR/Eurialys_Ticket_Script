@@ -29,7 +29,7 @@ source ___fnc.sh
         AND glpi_tickets.date <= '${moisActuel}'
       ORDER BY SUBSTR(glpi_entities.completename,25);\"" | sed 1d)
 
-  # Trie client par client et renvoie dans le "${_fileAllTicket}" (variable : _fileAllTicket, fonction : __configFile)
-  done | sort -u -t# > "${_fileAllTicket}"
+  # Trie client par client et renvoie dans le "${_fileAppelsDuMois}" (variable : _fileAppelsDuMois, fonction : __configFile)
+  done | sort -u -t# > "${_fileAppelsDuMois}"
 
   __formatList
