@@ -1,9 +1,8 @@
 #!/bin/bash
 source ___fnc.sh
 
-## FONCTION PRINCIPALE ##
-function __allTicket(){
-# On appelle les deux fonctions dans le but d'intialiser les variables
+## SCCRIPT PRINCIPALE ##
+  # On appelle les deux fonctions dans le but d'intialiser les variables
   __dateAuto
   __configFile
   __retrieveNumClient
@@ -34,5 +33,3 @@ function __allTicket(){
   done | sort -u -t# > "${_fileAllTicket}"
 
   __formatList
-}
-__allTicket
