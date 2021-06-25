@@ -1,5 +1,4 @@
 #!/bin/bash
-
 ## FONCTIONS DE CONFIGURATION ##
 function __configFile() {
   # Fichier Temporaire.
@@ -12,7 +11,7 @@ function __configFile() {
   _fileEtatTicketsClientBrut=fileEtatTicketsBrut.txt
 
   # Fichier utilisé pour construire le fichierAllTicketRestant, il comporte (tickets restant et nom client).
-  _fileEtatTicketsRestant=fileEtatTicketsRestant.txt
+  _fileFormatTicketsRestant=fileFormatTicketsRestant.txt
 
   # Fichier permettant de posséder tout les tickets restants de tout les clients.
   _fileEtatTicketsClient=fileEtatTicketsClient.txt
@@ -68,10 +67,13 @@ function __formatList() {
   awk '{print gensub("#", "CONTACT2:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
   awk '{print gensub("#", "DUREE:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
   awk '{print gensub("#", "MIN",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+
   # Permet de séparer les clients...
   awk -F"NUMCLIENT|TITRE" 'BEGIN{_old=""}{if($2!=_old){_old=$2;print"=================================";print}else{print}}END{print"================================="}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
   # Remplacement des "-"
   awk 'BEGIN{FS=OFS="NUMCLIENT"}{gsub("-"," ",$1);print}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+
+
 }
 
 function __retrieveTicketRestant() {
@@ -144,11 +146,11 @@ function __formatTicketRestant() {
      _TicketsRestant=$(echo ${_formatTicketRestant} | awk -F# '{print$4}')
 
      #récupère le nom du client
-     _nameClient="$(echo ${_formatTicketRestant} | awk -F# '{$1=$2=$3=$4=""; print}' | sed -e 's/[- ]/#/g' | sed -e 's/####//g' )"
+     _nameClient="$(echo ${_formatTicketRestant} | awk -F# '{$1=$2=$3=$4=""; print}' | sed -e 's/[- ]/#/g' | sed -e 's/####//g')"
 
      echo "${_TicketsRestant}#${_nameClient} "
 
-  done | sort -u > "${_fileEtatTicketsRestant}"
+  done | sort -u > "${_fileFormatTicketsRestant}"
 }
 
 function __retrieveNumClient () {
