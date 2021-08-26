@@ -1,5 +1,5 @@
 # GLPI_Ticket_Script
-Script en BASH ou le but est de procéder à une interrogation de la base de données (GLPI) de chacun de leurs clients de façon périodique, à chaque fin de mois, afin de pouvoir récupérer le nombre de tickets consommés pendant le mois et le nombre de tickets restants. 
+Script in BASH where the goal is to conduct a query of the database (GLPI) of each of their customers periodically, at the end of each month, in order to be able to retrieve the number of tickets consumed during the month and the number of remaining tickets.
 
 ## Installation
 
