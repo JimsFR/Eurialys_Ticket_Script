@@ -52,27 +52,20 @@ function __dateAuto() {
 
 # echo ${moisActuel} ${moisPrecedent} ${anneeActuelle} ${anneePrecedente}  # Cette commande permet le deboggage du code, n'est utile qu'en periode de TEST
 }
+
 function __formatList() {
- # Ici on remplace les '#' part des noms tel que Libellé ou bien client en les incorporant dans un fichier temporaire nommé temp.txt
- # ou nous le déplaçeront finalement avec un mv dans le fichier final $_fileAllTicket.txt...
-  awk '{print gensub("#", "CLIENT:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "IDTICKET:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "NUMCLIENT:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "TITRE:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "STATUTS:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "CONSO:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "OUVERTURE:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "FERMETURE:", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "CONTACT1:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "CONTACT2:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "DUREE:",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-  awk '{print gensub("#", "MIN",1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  # Ici on remplace les '#' part des noms tel que Libellé ou bien client en les incorporant dans un fichier temporaire nommé temp.txt
+  # ou nous le déplaçeront finalement avec un mv dans le fichier final $_fileAllTicket.txt...
+  liste_strings=("CLIENT:" "IDTICKET:" "NUMCLIENT:" "TITRE:" "STATUTS:" "CONSO:" "OUVERTURE:" "FERMETURE:" "CONTACT1:" "CONTACT2:" "DUREE:" "MIN");
+
+  for string in "${liste_strings[@]}"; do
+      awk '{print gensub("#", "'${string}'", 1, $0);}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
+  done
 
   # Permet de séparer les clients...
   awk -F"NUMCLIENT|TITRE" 'BEGIN{_old=""}{if($2!=_old){_old=$2;print"=================================";print}else{print}}END{print"================================="}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
   # Remplacement des "-"
   awk 'BEGIN{FS=OFS="NUMCLIENT"}{gsub("-"," ",$1);print}' "${_fileAppelsDuMois}" > "${_fileTemp}"; mv "${_fileTemp}" "${_fileAppelsDuMois}"
-
 
 }
 
@@ -112,7 +105,7 @@ function __setTicketRestant() {
 
         _client="$1"
 
-echo "setTicketRestant: CLIENT1: ${_client}"
+        echo "setTicketRestant: CLIENT1: ${_client}"
 
         # Début du script
         for _ticket in $(cat "${_fileEtatTicketsClientBrut}"); do
